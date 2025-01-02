@@ -1,6 +1,6 @@
 document.getElementById('home-btn').addEventListener('click', function() {
     const currentUrl = window.location.href;
-    const homePath = currentUrl.includes('my-web-app') ? '../index.html' : '../../index.html';
+    const homePath = currentUrl.includes('CPI') ? '../index.html' : '../../index.html';
     location.href = homePath;
 });
 
