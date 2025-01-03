@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('content').innerHTML = ProteinTracker();
         addProteinFormListener();
     });
-    
+
     document.getElementById('insights-btn').addEventListener('click', () => {
         location.href = 'src/insights.html';
     });
@@ -66,6 +66,7 @@ function addWorkoutFormListener() {
                     <option value="" disabled selected>Select Exercise</option>
                 </select>
             </div>
+            <div id="previous-weights"></div>
             <div id="sets"></div>
             <div class="routine-buttons">
                 <button type="button" class="add-set-btn">Add Set</button>
@@ -78,9 +79,29 @@ function addWorkoutFormListener() {
 
         const focusAreaSelect = routineDiv.querySelector('#focus-area');
         const exerciseSelect = routineDiv.querySelector('#exercise');
+        const previousWeightsDiv = routineDiv.querySelector('#previous-weights');
+
         focusAreaSelect.addEventListener('change', () => {
             const selectedArea = focusAreaSelect.value;
             exerciseSelect.innerHTML = `<option value="" disabled selected>Select Exercise</option>` + exercises[selectedArea].map(exercise => `<option value="${exercise}">${exercise}</option>`).join('');
+        });
+
+        exerciseSelect.addEventListener('change', () => {
+            const selectedExercise = exerciseSelect.value;
+            const workoutData = JSON.parse(localStorage.getItem('workoutData')) || [];
+            const exerciseData = workoutData.filter(entry => entry.exercise === selectedExercise);
+
+            if (exerciseData.length === 0) {
+                previousWeightsDiv.innerText = 'No previously recorded routine for this exercise.';
+                return;
+            }
+
+            const weights = exerciseData.map(entry => parseFloat(entry.setWeight));
+            const previousLow = Math.min(...weights);
+            const previousHigh = Math.max(...weights);
+            const pr = Math.max(...weights);
+
+            previousWeightsDiv.innerText = `Previous Low = ${previousLow} | Previous High = ${previousHigh} | PR = ${pr}`;
         });
 
         routineDiv.querySelector('.add-set-btn').addEventListener('click', () => addSet(routineDiv));
