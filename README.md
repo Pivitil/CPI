@@ -1,26 +1,39 @@
 # My Web App
 
-This is a simple web application built from scratch. Below are the details regarding the project structure, setup instructions, and usage.
+This is my very first experiment with a web application and I built it with the help of Visual Studio copilot.  The goal was simpliciy to help users quickly track their workout routines, habits, and protein intake.  While there are several apps on the market, they are either for pay or get way too complicated increasing the users learning curve and getting the way of doing what they want to do.  Workout and monitor progress.
 
 ## Project Structure
 
 ```
-my-web-app
-my-web-app
-├── src
-│   ├── index.html
-│   ├── styles
-│   │   └── style.css
-│   ├── scripts
+CPI/
+├── src/
+│   ├── components/
+│   │   ├── HabitTracker.js
+│   │   ├── WorkoutTracker.js
+│   │   ├── ProteinTracker.js
+│   │   └── OtherComponent.js
+│   ├── data/
+│   │   └── Exercises.js
+│   ├── scripts/
 │   │   ├── app.js
-│   │   ├── components
-│   │   │   ├── WorkoutTracker.js
-│   │   │   ├── HabitTracker.js
-│   │   │   └── ProteinTracker.js
-│   │   └── utils
-│   │       └── helpers.js
-├── package.json
+│   │   └── components/
+│   │       ├── HabitTracker.js
+│   │       ├── WorkoutTracker.js
+│   │       ├── ProteinTracker.js
+│   │       └── OtherComponent.js
+│   ├── styles/
+│   │   └── style.css
+│   ├── views/
+│   │   ├── index.html
+│   │   ├── insights.html
+│   │   └── otherPage.html
+│   └── assets/
+│       ├── images/
+│       │   └── logo.png
+│       └── icons/
+│           └── icon.svg
 ├── .gitignore
+├── package.json
 └── README.md
 ```
 
@@ -43,7 +56,7 @@ my-web-app
 
 ## Usage
 
-To run the web application, open `src/index.html` in your web browser. You can also set up a local server for a better development experience.
+To run the web application, open `CPI/index.html` in your web browser. You can also set up a local server for a better development experience.
 
 ## Contributing
 
