@@ -56,7 +56,7 @@ CPI/
 
 ## Usage
 
-To run the web application, open `src/index.html` in your web browser. You can also set up a local server for a better development experience.
+To run the web application, open `CPI/index.html` in your web browser. You can also set up a local server for a better development experience.
 
 ## Contributing
 
