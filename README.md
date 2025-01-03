@@ -5,22 +5,35 @@ This is a simple web application built from scratch. Below are the details regar
 ## Project Structure
 
 ```
-my-web-app
-my-web-app
-├── src
-│   ├── index.html
-│   ├── styles
-│   │   └── style.css
-│   ├── scripts
+CPI/
+├── src/
+│   ├── components/
+│   │   ├── HabitTracker.js
+│   │   ├── WorkoutTracker.js
+│   │   ├── ProteinTracker.js
+│   │   └── OtherComponent.js
+│   ├── data/
+│   │   └── Exercises.js
+│   ├── scripts/
 │   │   ├── app.js
-│   │   ├── components
-│   │   │   ├── WorkoutTracker.js
-│   │   │   ├── HabitTracker.js
-│   │   │   └── ProteinTracker.js
-│   │   └── utils
-│   │       └── helpers.js
-├── package.json
+│   │   └── components/
+│   │       ├── HabitTracker.js
+│   │       ├── WorkoutTracker.js
+│   │       ├── ProteinTracker.js
+│   │       └── OtherComponent.js
+│   ├── styles/
+│   │   └── style.css
+│   ├── views/
+│   │   ├── index.html
+│   │   ├── insights.html
+│   │   └── otherPage.html
+│   └── assets/
+│       ├── images/
+│       │   └── logo.png
+│       └── icons/
+│           └── icon.svg
 ├── .gitignore
+├── package.json
 └── README.md
 ```
 
