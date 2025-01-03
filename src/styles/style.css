@@ -199,3 +199,7 @@ th {
     color: var(--secondary-color);
     text-align: center; /* Center the headers */
 }
+
+.center-cell {
+    text-align: center;
+}
