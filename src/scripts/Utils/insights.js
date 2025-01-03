@@ -16,6 +16,10 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('protein-report-btn').addEventListener('click', function() {
         generateReport('protein');
     });
+
+    document.getElementById('export-btn').addEventListener('click', function() {
+        exportDataToCSV();
+    });
 });
 
 function generateReport(type) {
@@ -168,4 +172,45 @@ function generateProteinTable(title, data) {
 
     table += `</tbody></table>`;
     return table;
+}
+
+function exportDataToCSV() {
+    const workoutData = JSON.parse(localStorage.getItem('workoutData')) || [];
+    const habitData = JSON.parse(localStorage.getItem('habitData')) || [];
+    const proteinData = JSON.parse(localStorage.getItem('proteinData')) || {};
+
+    const workoutCSV = convertToCSV(workoutData, ['timestamp', 'routineNumber', 'focusArea', 'exercise', 'setNumber', 'setWeight', 'setReps']);
+    const habitCSV = convertToCSV(habitData, ['timestamp', 'sleep', 'stress', 'weight', 'notes']);
+    const proteinCSV = convertToCSV(Object.keys(proteinData).map(date => ({ date, ...proteinData[date] })), ['date', 'goal', 'intake']);
+
+    downloadCSV(workoutCSV, 'workout_data.csv');
+    downloadCSV(habitCSV, 'habit_data.csv');
+    downloadCSV(proteinCSV, 'protein_data.csv');
+}
+
+function convertToCSV(data, headers) {
+    const csvRows = [];
+    csvRows.push(headers.join(','));
+
+    data.forEach(row => {
+        const values = headers.map(header => {
+            const escaped = ('' + (row[header] || '')).replace(/"/g, '\\"');
+            return `"${escaped}"`;
+        });
+        csvRows.push(values.join(','));
+    });
+
+    return csvRows.join('\n');
+}
+
+function downloadCSV(csv, filename) {
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.setAttribute('hidden', '');
+    a.setAttribute('href', url);
+    a.setAttribute('download', filename);
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
 }
