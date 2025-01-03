@@ -110,8 +110,10 @@ function generateHabitTable(title, data) {
 
     const headers = {
         timestamp: 'Date',
-        habit: 'Habit',
-        status: 'Status'
+        sleep: 'Sleep',
+        stress: 'Stress',
+        weight: 'Weight',
+        notes: 'Note'
     };
 
     let table = `<h3>${title}</h3><table><thead><tr>`;
@@ -124,7 +126,11 @@ function generateHabitTable(title, data) {
         table += `<tr>`;
         Object.keys(headers).forEach(key => {
             let value = row[key];
-            table += `<td>${value}</td>`;
+            if (key === 'timestamp') {
+                value = new Date(value).toLocaleDateString(); // Format the timestamp to short date
+            }
+            const cellClass = ['timestamp', 'sleep', 'stress', 'weight', 'notes'].includes(key) ? 'center-cell' : '';
+            table += `<td class="${cellClass}">${value}</td>`;
         });
         table += `</tr>`;
     });
@@ -140,6 +146,7 @@ function generateProteinTable(title, data) {
 
     const headers = {
         date: 'Date',
+        goal: 'Goal',
         proteinIntake: 'Protein Intake'
     };
 
@@ -150,9 +157,12 @@ function generateProteinTable(title, data) {
     table += `</tr></thead><tbody>`;
 
     Object.keys(data).forEach(date => {
+        const goal = data[date].goal;
+        const intake = data[date].intake;
         table += `<tr>`;
-        table += `<td>${date}</td>`;
-        table += `<td>${data[date]}</td>`;
+        table += `<td class="center-cell">${new Date(date).toLocaleDateString()}</td>`;
+        table += `<td class="center-cell">${goal}</td>`;
+        table += `<td class="center-cell">${intake}</td>`;
         table += `</tr>`;
     });
 
