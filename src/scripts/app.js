@@ -1,7 +1,7 @@
 import WorkoutTracker from './components/WorkoutTracker.js';
 import HabitTracker from './components/HabitTracker.js';
 import ProteinTracker from './components/ProteinTracker.js';
-import { exercises } from './data/exercises.js';
+import { exercises } from './data/exercises.js'; 
 
 document.addEventListener('DOMContentLoaded', () => {
     const buttonContainer = document.getElementById('button-container');

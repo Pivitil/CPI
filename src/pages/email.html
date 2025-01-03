@@ -1,1 +1,24 @@
-// placeholder for being able to add a report to the email page
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Report</title>
+    <link rel="stylesheet" href="../styles/style.css">
+</head>
+<body>
+    <header>
+        <button id="home-btn">Home</button>
+    </header>
+    <main>
+        <h1>What would you like to email?</h1>
+        <p style="font-size: smaller;">Emailed reports will only contain the last 30 days of information.</p>
+        <div class="button-container">
+            <button id="email-workout-btn">Workout Data</button>
+            <button id="email-habits-btn">Habit Data</button>
+            <button id="email-protein-btn">Protein Data</button>
+        </div>
+    </main>
+    <script src="../scripts/data/email.js"></script>
+</body>
+</html>

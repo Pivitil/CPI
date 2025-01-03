@@ -9,6 +9,10 @@ document.addEventListener('DOMContentLoaded', function() {
         location.href = '../pages/export.html';
     });
 
+    document.getElementById('email-btn').addEventListener('click', function() {
+        location.href = '../pages/email.html';
+    });
+
     document.getElementById('workout-report-btn').addEventListener('click', function() {
         generateReport('workout');
     });
