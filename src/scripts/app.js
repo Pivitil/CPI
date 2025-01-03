@@ -115,7 +115,7 @@ function addWorkoutFormListener() {
                 const weight = set.querySelector('#weight').value;
                 const reps = set.querySelector('#reps').value;
                 workoutData.push({
-                    timestamp: new Date().toISOString(),
+                    timestamp: new Date().toLocaleString(), // Use local time
                     routineNumber: routineIndex + 1,
                     focusArea,
                     exercise,
