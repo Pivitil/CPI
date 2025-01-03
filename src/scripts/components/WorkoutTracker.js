@@ -1,4 +1,4 @@
-import { exercises } from '../data/Exercises.js';
+import { exercises } from '../data/exercises.js';
 
 export default function WorkoutTracker() {
     const focusAreas = Object.keys(exercises);

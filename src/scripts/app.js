@@ -1,7 +1,7 @@
 import WorkoutTracker from './components/WorkoutTracker.js';
 import HabitTracker from './components/HabitTracker.js';
 import ProteinTracker from './components/ProteinTracker.js';
-import { exercises } from './data/Exercises.js';
+import { exercises } from './data/exercises.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     const app = document.getElementById('app');
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.getElementById('insights-btn').addEventListener('click', () => {
-        location.href = 'src/insights.html';
+        location.href = 'src/pages/insights.html';
     });
 });
 
