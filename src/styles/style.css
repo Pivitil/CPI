@@ -193,3 +193,7 @@ th {
     color: var(--secondary-color);
     text-align: center; /* Center the headers */
 }
+
+.center-text {
+    text-align: center;
+}

@@ -81,7 +81,8 @@ function filterProteinDataByDateRange(data, startDate, endDate) {
 function generateWorkoutTable(title, data) {
     let table = `<h3>${title}</h3><table><tr><th>Date</th><th>Exercise</th><th>Sets</th><th>Reps</th><th>Weight</th></tr>`;
     data.forEach(item => {
-        table += `<tr><td>${item.timestamp}</td><td>${item.exercise}</td><td>${item.sets}</td><td>${item.reps}</td><td>${item.weight}</td></tr>`;
+        const date = new Date(item.timestamp).toLocaleDateString(); // Format date to short date
+        table += `<tr><td class="center-text">${date}</td><td class="center-text">${item.exercise}</td><td class="center-text">${item.setNumber}</td><td class="center-text">${item.setReps}</td><td class="center-text">${item.setWeight}</td></tr>`;
     });
     table += '</table>';
     return table;
@@ -90,7 +91,8 @@ function generateWorkoutTable(title, data) {
 function generateHabitTable(title, data) {
     let table = `<h3>${title}</h3><table><tr><th>Date</th><th>Sleep</th><th>Stress</th><th>Weight</th><th>Notes</th></tr>`;
     data.forEach(item => {
-        table += `<tr><td>${item.timestamp}</td><td>${item.sleep}</td><td>${item.stress}</td><td>${item.weight}</td><td>${item.notes}</td></tr>`;
+        const date = new Date(item.timestamp).toLocaleDateString(); // Format date to short date
+        table += `<tr><td class="center-text">${date}</td><td class="center-text">${item.sleep}</td><td class="center-text">${item.stress}</td><td class="center-text">${item.weight}</td><td class="center-text">${item.notes}</td></tr>`;
     });
     table += '</table>';
     return table;
@@ -99,7 +101,7 @@ function generateHabitTable(title, data) {
 function generateProteinTable(title, data) {
     let table = `<h3>${title}</h3><table><tr><th>Date</th><th>Goal</th><th>Intake</th></tr>`;
     for (const [date, value] of Object.entries(data)) {
-        table += `<tr><td>${date}</td><td>${value.goal}</td><td>${value.intake}</td></tr>`;
+        table += `<tr><td class="center-text">${date}</td><td class="center-text">${value.goal}</td><td class="center-text">${value.intake}</td></tr>`;
     }
     table += '</table>';
     return table;
