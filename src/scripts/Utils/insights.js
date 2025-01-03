@@ -1,13 +1,21 @@
-document.getElementById('workout-report-btn').addEventListener('click', function() {
-    generateReport('workout');
-});
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('home-btn').addEventListener('click', function() {
+        const currentUrl = window.location.href;
+        const homePath = currentUrl.includes('CPI') ? '../index.html' : '../../index.html';
+        location.href = homePath;
+    });
 
-document.getElementById('habits-report-btn').addEventListener('click', function() {
-    generateReport('habits');
-});
+    document.getElementById('workout-report-btn').addEventListener('click', function() {
+        generateReport('workout');
+    });
 
-document.getElementById('protein-report-btn').addEventListener('click', function() {
-    generateReport('protein');
+    document.getElementById('habits-report-btn').addEventListener('click', function() {
+        generateReport('habits');
+    });
+
+    document.getElementById('protein-report-btn').addEventListener('click', function() {
+        generateReport('protein');
+    });
 });
 
 function generateReport(type) {

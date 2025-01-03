@@ -151,7 +151,7 @@ function addHabitFormListener() {
             if (!Array.isArray(habitData)) {
                 habitData = [];
             }
-            habitData.push({ sleep, stress, weight, notes, timestamp: new Date().toISOString() });
+            habitData.push({ sleep, stress, weight, notes, timestamp: new Date().toLocaleString() }); // Use local time
             localStorage.setItem('habitData', JSON.stringify(habitData));
             alert('Habit data saved!');
         });
@@ -165,7 +165,7 @@ function addProteinFormListener() {
             event.preventDefault();
             const proteinGoal = document.getElementById('protein-goal').value;
             const proteinIntake = document.getElementById('protein-intake').value;
-            const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
+            const today = new Date().toLocaleDateString(); // Get today's date in local format
 
             let proteinData = JSON.parse(localStorage.getItem('proteinData')) || {};
             if (!proteinData[today]) {
