@@ -4,15 +4,12 @@ import ProteinTracker from './components/ProteinTracker.js';
 import { exercises } from './data/exercises.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-    const app = document.getElementById('app');
-    app.innerHTML = `
-        <div class="button-container">
-            <button id="workout-btn">Track Workout</button>
-            <button id="habit-btn">Track Habits</button>
-            <button id="protein-btn">Track Protein</button>
-            <button id="insights-btn">Insights</button>
-        </div>
-        <div id="content"></div>
+    const buttonContainer = document.getElementById('button-container');
+    buttonContainer.innerHTML = `
+        <button id="workout-btn">Track Workout</button>
+        <button id="habit-btn">Track Habits</button>
+        <button id="protein-btn">Track Protein</button>
+        <button id="insights-btn">Insights</button>
     `;
 
     document.getElementById('workout-btn').addEventListener('click', () => {
@@ -34,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
         location.href = 'src/pages/insights.html';
     });
 });
+
 
 function addWorkoutFormListener() {
     let routineCounter = 0;
