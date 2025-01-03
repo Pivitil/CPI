@@ -6,35 +6,32 @@ This is my very first experiment with a web application and I built it with the 
 
 ```
 CPI/
-├── src/
-│   ├── components/
-│   │   ├── HabitTracker.js
-│   │   ├── WorkoutTracker.js
-│   │   ├── ProteinTracker.js
-│   │   └── OtherComponent.js
-│   ├── data/
-│   │   └── Exercises.js
-│   ├── scripts/
-│   │   ├── app.js
-│   │   └── components/
-│   │       ├── HabitTracker.js
-│   │       ├── WorkoutTracker.js
-│   │       ├── ProteinTracker.js
-│   │       └── OtherComponent.js
-│   ├── styles/
-│   │   └── style.css
-│   ├── views/
-│   │   ├── index.html
-│   │   ├── insights.html
-│   │   └── otherPage.html
-│   └── assets/
-│       ├── images/
-│       │   └── logo.png
-│       └── icons/
-│           └── icon.svg
 ├── .gitignore
+├── README.md
+├── index.html
+├── package-lock.json
 ├── package.json
-└── README.md
+├── src/
+│   ├── images/
+│   │   └── logo.png
+│   ├── pages/
+│   │   ├── email.html
+│   │   ├── export.html
+│   │   └── insights.html
+│   ├── scripts/
+│   │   ├── Utils/
+│   │   │   └── helpers.js
+│   │   ├── app.js
+│   │   ├── components/
+│   │   │   ├── HabitTracker.js
+│   │   │   ├── ProteinTracker.js
+│   │   │   └── WorkoutTracker.js
+│   │   ├── data/
+│   │   │   ├── exercises.js
+│   │   │   ├── export.js
+│   │   │   └── insights.js
+│   └── styles/
+│       └── style.css
 ```
 
 ## Setup Instructions
