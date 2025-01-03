@@ -16,16 +16,19 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('protein-report-btn').addEventListener('click', function() {
         generateReport('protein');
     });
-
-    document.getElementById('export-btn').addEventListener('click', function() {
-        exportDataToCSV();
-    });
 });
 
 function generateReport(type) {
-    const startDate = new Date(document.getElementById('start-date').value);
-    const endDate = new Date(document.getElementById('end-date').value);
-    endDate.setHours(23, 59, 59, 999); // Include the entire end date
+    const startDateInput = document.getElementById('start-date').value;
+    const endDateInput = document.getElementById('end-date').value;
+
+    // Parse the input dates as local dates
+    const startDate = new Date(startDateInput + 'T00:00:00');
+    const endDate = new Date(endDateInput + 'T23:59:59');
+
+    console.log(`Start Date: ${startDate}`);
+    console.log(`End Date: ${endDate}`);
+
     const reportDiv = document.getElementById('report');
     reportDiv.innerHTML = '';
 
@@ -49,6 +52,7 @@ function generateReport(type) {
 function filterWorkoutDataByDateRange(data, startDate, endDate) {
     return data.filter(item => {
         const itemDate = new Date(item.timestamp);
+        console.log(`Item Date: ${itemDate}`);
         return itemDate >= startDate && itemDate <= endDate;
     });
 }
@@ -56,6 +60,7 @@ function filterWorkoutDataByDateRange(data, startDate, endDate) {
 function filterHabitDataByDateRange(data, startDate, endDate) {
     return data.filter(item => {
         const itemDate = new Date(item.timestamp);
+        console.log(`Item Date: ${itemDate}`);
         return itemDate >= startDate && itemDate <= endDate;
     });
 }
@@ -63,6 +68,7 @@ function filterHabitDataByDateRange(data, startDate, endDate) {
 function filterProteinDataByDateRange(data, startDate, endDate) {
     return Object.keys(data).filter(date => {
         const currentDate = new Date(date);
+        console.log(`Current Date: ${currentDate}`);
         return currentDate >= startDate && currentDate <= endDate;
     }).reduce((obj, key) => {
         obj[key] = data[key];
