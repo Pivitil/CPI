@@ -1,6 +1,6 @@
 # My Web App
 
-This is a simple web application built from scratch. Below are the details regarding the project structure, setup instructions, and usage.
+This is my very first experiment with a web application and I built it with the help of Visual Studio copilot.  The goal was simpliciy to help users quickly track their workout routines, habits, and protein intake.  While there are several apps on the market, they are either for pay or get way too complicated increasing the users learning curve and getting the way of doing what they want to do.  Workout and monitor progress.
 
 ## Project Structure
 
