@@ -1,17 +1,16 @@
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('home-btn').addEventListener('click', function() {
-        const currentUrl = window.location.href;
-        const homePath = currentUrl.includes('CPI') ? '../index.html' : '../../index.html';
-        location.href = homePath;
+        location.href = '../../index.html';
     });
 
     document.getElementById('export-btn').addEventListener('click', function() {
         location.href = '../pages/export.html';
     });
 
-    document.getElementById('email-btn').addEventListener('click', function() {
-        location.href = '../pages/email.html';
-    });
+    // Commented out the email button functionality for now
+    // document.getElementById('email-btn').addEventListener('click', function() {
+    //     location.href = '../pages/email.html';
+    // });
 
     document.getElementById('workout-report-btn').addEventListener('click', function() {
         generateReport('workout');
