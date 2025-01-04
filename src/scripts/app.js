@@ -188,18 +188,35 @@ function addProteinFormListener() {
             let proteinData = JSON.parse(localStorage.getItem('proteinData')) || {};
             if (!proteinData[today]) {
                 proteinData[today] = { goal: proteinGoal, intake: 0 };
+            } else {
+                // Update the goal only if it is not already set
+                if (!proteinData[today].goal) {
+                    proteinData[today].goal = proteinGoal;
+                }
             }
             proteinData[today].intake += parseInt(proteinIntake, 10);
 
             localStorage.setItem('proteinData', JSON.stringify(proteinData));
 
-            const percentage = ((proteinData[today].intake / proteinData[today].goal) * 100).toFixed(2);
-            document.getElementById('protein-status').innerText = `You've consumed ${proteinData[today].intake} protein for the day which is ${percentage}% of today's goal.`;
+            updateProteinStatus(today, proteinData[today]);
 
             // Reset the protein intake input field
             document.getElementById('protein-intake').value = '';
 
             alert('Protein data saved!');
         });
+
+        // Load protein data and update status when the page is loaded
+        const today = new Date().toLocaleDateString();
+        const proteinData = JSON.parse(localStorage.getItem('proteinData')) || {};
+        if (proteinData[today]) {
+            document.getElementById('protein-goal').value = proteinData[today].goal || '';
+            updateProteinStatus(today, proteinData[today]);
+        }
     }
+}
+
+function updateProteinStatus(date, data) {
+    const percentage = ((data.intake / data.goal) * 100).toFixed(2);
+    document.getElementById('protein-status').innerText = `You've consumed ${data.intake} protein for the day which is ${percentage}% of today's goal.`;
 }
