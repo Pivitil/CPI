@@ -157,11 +157,6 @@ form div {
     color: var(--background-color);
 }
 
-/* Adjusted Spacing for Routine Buttons */
-.routine-buttons {
-    margin-top: 20px; /* Increase spacing between buttons and routine entry box */
-}
-
 /* Habit Container Styles */
 .habit-container {
     width: 100%;
@@ -170,7 +165,7 @@ form div {
     background-color: var(--box-background-color);
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
     margin: 20px auto;
-    color: var(--text-color);
+    color: var (--text-color);
 }
 
 /* Table Styles */
@@ -236,4 +231,35 @@ hr {
     color: red;
     font-weight: bold;
     text-align: center;
+}
+
+/* Media Queries for Mobile Optimization */
+@media (max-width: 768px) {
+    /* Adjusting the layout for smaller screens */
+    
+    body {
+        padding: 10px;
+    }
+
+    #app {
+        padding: 10px;
+    }
+
+    .header-content, .title-container {
+        text-align: left;
+    }
+
+    .button-container, .button-group, .routine-buttons, .form-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .button-container button, .button-group button, form button, .routine-buttons button, .form-buttons button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    form select, form input, form textarea, .routine select, .routine input {
+        max-width: 100%;
+    }
 }
