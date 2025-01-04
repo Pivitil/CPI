@@ -32,7 +32,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-
 function addWorkoutFormListener() {
     let routineCounter = 0;
 
