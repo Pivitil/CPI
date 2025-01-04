@@ -1,3 +1,4 @@
+/* Root Variables */
 :root {
     --primary-color: #4E523A; /* New Olive Green */
     --secondary-color: #CCCCD6; /* New Grey */
@@ -7,6 +8,7 @@
     --box-background-color: #2C2C2C; /* Dark Grey for the working box */
 }
 
+/* Global Styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -18,9 +20,10 @@ body {
     color: var(--text-color);
 }
 
+/* Header Styles */
 header {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
     margin-top: 20px;
     color: var(--secondary-color);
@@ -28,105 +31,79 @@ header {
 
 .header-content {
     display: flex;
+    flex-direction: column;
     align-items: center;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 #logo {
-    width: 100px; /* Adjust the size of the logo as needed */
+    width: 100px;
     height: auto;
-    margin-right: 20px; /* Space between the logo and the title */
+    margin-bottom: 10px;
 }
 
 .title-container {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center the titles on one another */
+    align-items: center;
 }
 
 h1 {
     margin: 0;
     color: var(--secondary-color);
-    font-size: 24px; /* Adjust the font size as needed */
+    font-size: 24px;
 }
 
+/* App Container Styles */
 #app {
+    display: none;
     width: 100%;
     max-width: 600px;
     padding: 20px;
-    background-color: var(--box-background-color); /* Dark Grey for the working box */
+    background-color: var(--box-background-color);
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
     margin-top: 20px;
     color: var(--text-color);
 }
 
-.button-container {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 20px;
-}
-
-.button-container button, form button, .routine-buttons button, .form-buttons button {
-    width: 150px; /* Set a fixed width for all buttons */
-    padding: 10px;
-    font-size: 16px;
-    background-color: var(--primary-color);
-    color: var(--secondary-color);
-    border: none;
-    cursor: pointer;
-}
-
-.button-container button:hover, form button:hover, .routine-buttons button:hover, .form-buttons button:hover {
-    background-color: var(--secondary-color);
-    color: var(--background-color);
-}
-
+/* Form Styles */
 form {
     display: flex;
     flex-direction: column;
-    align-items: stretch; /* Ensure form elements take full width */
-    width: 100%; /* Ensure form takes full width */
-    max-width: 600px; /* Ensure form does not exceed container width */
-}
-
-.form-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 20px;
+    align-items: stretch;
+    width: 100%;
+    max-width: 600px;
 }
 
 form select, form input, form textarea {
     width: 100%;
     padding: 8px;
     font-size: 16px;
-    font-family: Arial, sans-serif; /* Ensure consistent font type */
-    color: var(--text-color); /* Ensure consistent text color */
+    font-family: Arial, sans-serif;
+    color: var(--text-color);
     box-sizing: border-box;
     border: 1px solid var(--secondary-color);
     background-color: var(--background-color);
-    margin-bottom: 10px; /* Add spacing between form elements */
+    margin-bottom: 10px;
 }
 
 form select::placeholder, form input::placeholder, form textarea::placeholder {
-    color: var(--placeholder-color); /* Light grey color for placeholder text */
+    color: var(--placeholder-color);
 }
 
-#protein-status {
-    margin-top: 20px; /* Add spacing between the status message and the submit button */
-    text-align: center; /* Center the status message */
+form div {
+    margin-bottom: 10px; /* This matches the margin for button groups and other sections */
 }
 
+/* Routine Styles */
 .routine {
+    margin-top: 20px; /* Add top margin to separate it from the button */
     margin-bottom: 20px;
     padding: 10px;
     border: 1px solid var(--secondary-color);
     border-radius: 5px;
     background-color: var(--background-color);
-}
-
-.set {
-    margin-top: 10px;
 }
 
 .routine div {
@@ -145,55 +122,118 @@ form select::placeholder, form input::placeholder, form textarea::placeholder {
     max-width: 300px;
     padding: 8px;
     font-size: 16px;
-    font-family: Arial, sans-serif; /* Ensure consistent font type */
-    color: var(--text-color); /* Ensure consistent text color */
+    font-family: Arial, sans-serif;
+    color: var(--text-color);
     box-sizing: border-box;
     border: 1px solid var(--secondary-color);
     background-color: var(--background-color);
-    margin-bottom: 10px; /* Add spacing between routine elements */
+    margin-bottom: 10px;
 }
 
 .routine select::placeholder, .routine input::placeholder {
-    color: var(--placeholder-color); /* Light grey color for placeholder text */
+    color: var(--placeholder-color);
 }
 
-.routine-buttons {
+/* Button Container Styles */
+.button-container, .button-group, .routine-buttons, .form-buttons {
     display: flex;
     justify-content: center;
     gap: 10px;
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
+.button-container button, .button-group button, form button, .routine-buttons button, .form-buttons button {
+    width: 150px;
+    padding: 10px;
+    font-size: 16px;
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    border: none;
+    cursor: pointer;
+}
+
+.button-container button:hover, .button-group button:hover, form button:hover, .routine-buttons button:hover, .form-buttons button:hover {
+    background-color: var(--secondary-color);
+    color: var(--background-color);
+}
+
+/* Adjusted Spacing for Routine Buttons */
+.routine-buttons {
+    margin-top: 20px; /* Increase spacing between buttons and routine entry box */
+}
+
+/* Habit Container Styles */
 .habit-container {
     width: 100%;
     max-width: 600px;
     padding: 20px;
-    background-color: var(--box-background-color); /* Dark Grey for the working box */
+    background-color: var(--box-background-color);
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-    margin: 20px auto; /* Center the container horizontally */
+    margin: 20px auto;
     color: var(--text-color);
 }
 
+/* Table Styles */
 table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-    table-layout: fixed; /* Ensure table layout is fixed */
+    table-layout: fixed;
 }
 
 th, td {
     padding: 10px;
     border: 1px solid #ddd;
     text-align: left;
-    word-wrap: break-word; /* Ensure long words break to fit within the cell */
+    word-wrap: break-word;
 }
 
 th {
     background-color: var(--primary-color);
     color: var(--secondary-color);
-    text-align: center; /* Center the headers */
+    text-align: center;
 }
 
 .center-text {
+    text-align: center;
+}
+
+/* Content and Button Container Styles */
+#content {
+    display: none;
+}
+
+#button-container {
+    display: flex;
+    justify-content: center;
+}
+
+/* Protein Status Styles */
+#protein-status {
+    margin-top: 20px;
+    text-align: center;
+}
+
+/* Form Section Styles */
+.form-section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px; /* Reduce margin to tighten spacing */
+}
+
+.form-label {
+    flex: 0 0 120px; /* Fixed width for labels */
+    text-align: right;
+    padding-right: 10px;
+}
+
+hr {
+    margin-top: 5px; /* Reduce margin to tighten spacing */
+    margin-bottom: 5px; /* Reduce margin to tighten spacing */
+}
+
+.error-message {
+    color: red;
+    font-weight: bold;
     text-align: center;
 }

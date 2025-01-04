@@ -1,36 +1,44 @@
 import WorkoutTracker from './components/WorkoutTracker.js';
 import HabitTracker from './components/HabitTracker.js';
 import ProteinTracker from './components/ProteinTracker.js';
+import Insights from './data/insights.js';
 import { exercises } from './data/exercises.js'; 
 
 document.addEventListener('DOMContentLoaded', () => {
-    const buttonContainer = document.getElementById('button-container');
-    buttonContainer.innerHTML = `
-        <button id="workout-btn">Track Workout</button>
-        <button id="habit-btn">Track Habits</button>
-        <button id="protein-btn">Track Protein</button>
-        <button id="insights-btn">Insights</button>
-    `;
+    fetch('src/pages/header.html')
+        .then(response => response.text())
+        .then(data => {
+            document.querySelector('header').innerHTML = data;
+            setupEventListeners();
+        });
+});
 
+function setupEventListeners() {
     document.getElementById('workout-btn').addEventListener('click', () => {
-        document.getElementById('content').innerHTML = WorkoutTracker();
+        displayAppContent(WorkoutTracker);
         addWorkoutFormListener();
     });
 
     document.getElementById('habit-btn').addEventListener('click', () => {
-        document.getElementById('content').innerHTML = HabitTracker();
+        displayAppContent(HabitTracker);
         addHabitFormListener();
     });
 
     document.getElementById('protein-btn').addEventListener('click', () => {
-        document.getElementById('content').innerHTML = ProteinTracker();
+        displayAppContent(ProteinTracker);
         addProteinFormListener();
     });
 
     document.getElementById('insights-btn').addEventListener('click', () => {
-        location.href = 'src/pages/insights.html';
+        displayAppContent(Insights);
+        addInsightsFormListener();
     });
-});
+}
+
+function displayAppContent(contentFunction) {
+    document.getElementById('app').innerHTML = contentFunction();
+    document.getElementById('app').style.display = 'block'; // Show the app div
+}
 
 function addWorkoutFormListener() {
     let routineCounter = 0;
@@ -157,21 +165,34 @@ function addWorkoutFormListener() {
 }
 
 function addHabitFormListener() {
-    const form = document.getElementById('habit-form');
-    if (form) {
-        form.addEventListener('submit', function(event) {
-            event.preventDefault();
+    const habitForm = document.getElementById('habit-form');
+
+    if (habitForm) {
+        habitForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form submission from reloading the page
+
             const sleep = document.getElementById('sleep').value;
             const stress = document.getElementById('stress').value;
             const weight = document.getElementById('weight').value;
             const notes = document.getElementById('notes').value;
-            let habitData = JSON.parse(localStorage.getItem('habitData')) || [];
-            if (!Array.isArray(habitData)) {
-                habitData = [];
+
+            const habitData = {
+                timestamp: new Date().toLocaleString(), // Use local time format
+                sleep,
+                stress,
+                weight,
+                notes
+            };
+
+            let storedHabitData = JSON.parse(localStorage.getItem('habitData')) || [];
+            if (!Array.isArray(storedHabitData)) {
+                storedHabitData = [];
             }
-            habitData.push({ sleep, stress, weight, notes, timestamp: new Date().toLocaleString() }); // Use local time
-            localStorage.setItem('habitData', JSON.stringify(habitData));
+            storedHabitData.push(habitData);
+            localStorage.setItem('habitData', JSON.stringify(storedHabitData));
+
             alert('Habit data saved!');
+            habitForm.reset(); // Clear the form after submission
         });
     }
 }
@@ -217,6 +238,192 @@ function addProteinFormListener() {
 }
 
 function updateProteinStatus(date, data) {
-    const percentage = ((data.intake / data.goal) * 100).toFixed(2);
-    document.getElementById('protein-status').innerText = `You've consumed ${data.intake} protein for the day which is ${percentage}% of today's goal.`;
+    const proteinStatusDiv = document.getElementById('protein-status');
+    if (proteinStatusDiv) {
+        proteinStatusDiv.innerText = `Date: ${date}, Goal: ${data.goal} grams, Intake: ${data.intake} grams`;
+    }
+}
+
+function addInsightsFormListener() {
+    document.getElementById('export-habit-btn').addEventListener('click', function() {
+        exportData('habit');
+    });
+
+    document.getElementById('export-protein-btn').addEventListener('click', function() {
+        exportData('protein');
+    });
+
+    document.getElementById('export-workout-btn').addEventListener('click', function() {
+        exportData('workout');
+    });
+
+    document.getElementById('workout-report-btn').addEventListener('click', () => {
+        generateReport('workout');
+    });
+
+    document.getElementById('habits-report-btn').addEventListener('click', () => {
+        generateReport('habits');
+    });
+
+    document.getElementById('protein-report-btn').addEventListener('click', () => {
+        generateReport('protein');
+    });
+}
+
+function exportData(type) {
+    const workoutData = JSON.parse(localStorage.getItem('workoutData')) || [];
+    const habitData = JSON.parse(localStorage.getItem('habitData')) || [];
+    const proteinData = JSON.parse(localStorage.getItem('proteinData')) || {};
+
+    let data, headers, filename;
+
+    if (type === 'workout') {
+        data = workoutData;
+        headers = ['timestamp', 'routineNumber', 'focusArea', 'exercise', 'setNumber', 'setWeight', 'setReps'];
+        filename = 'workout_data.csv';
+    } else if (type === 'habit') {
+        data = habitData;
+        headers = ['timestamp', 'sleep', 'stress', 'weight', 'notes'];
+        filename = 'habit_data.csv';
+    } else if (type === 'protein') {
+        data = Object.keys(proteinData).map(date => ({ date, ...proteinData[date] }));
+        headers = ['date', 'goal', 'intake'];
+        filename = 'protein_data.csv';
+    }
+
+    const csv = convertToCSV(data, headers);
+    downloadCSV(csv, filename);
+}
+
+function convertToCSV(data, headers) {
+    const csvRows = [];
+    csvRows.push(headers.join(','));
+
+    data.forEach(row => {
+        const values = headers.map(header => {
+            const escaped = ('' + (row[header] || '')).replace(/"/g, '\\"');
+            return `"${escaped}"`;
+        });
+        csvRows.push(values.join(','));
+    });
+
+    return csvRows.join('\n');
+}
+
+function downloadCSV(csv, filename) {
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.setAttribute('hidden', '');
+    a.setAttribute('href', url);
+    a.setAttribute('download', filename);
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+}
+
+function generateReport(type) {
+    const startDateInput = document.getElementById('start-date').value;
+    const endDateInput = document.getElementById('end-date').value;
+    const reportDiv = document.getElementById('report');
+    reportDiv.innerHTML = '';
+
+    // Error handling
+    if (!startDateInput && !endDateInput) {
+        reportDiv.innerHTML = '<p class="error-message">Enter a Date Range</p>';
+        return;
+    } else if (!startDateInput) {
+        reportDiv.innerHTML = '<p class="error-message">No Start Date</p>';
+        return;
+    } else if (!endDateInput) {
+        reportDiv.innerHTML = '<p class="error-message">No End Date</p>';
+        return;
+    }
+
+    const startDate = new Date(startDateInput + 'T00:00:00');
+    const endDate = new Date(endDateInput + 'T23:59:59');
+
+    console.log(`Start Date: ${startDate}`);
+    console.log(`End Date: ${endDate}`);
+
+    const workoutData = JSON.parse(localStorage.getItem('workoutData')) || [];
+    const habitData = JSON.parse(localStorage.getItem('habitData')) || [];
+    const proteinData = JSON.parse(localStorage.getItem('proteinData')) || {};
+
+    const filteredWorkoutData = filterWorkoutDataByDateRange(workoutData, startDate, endDate);
+    const filteredHabitData = filterHabitDataByDateRange(habitData, startDate, endDate);
+    const filteredProteinData = filterProteinDataByDateRange(proteinData, startDate, endDate);
+
+    if (type === 'workout' && filteredWorkoutData.length === 0) {
+        reportDiv.innerHTML = '<p class="error-message">No data available for date range specified</p>';
+    } else if (type === 'habits' && filteredHabitData.length === 0) {
+        reportDiv.innerHTML = '<p class="error-message">No data available for date range specified</p>';
+    } else if (type === 'protein' && Object.keys(filteredProteinData).length === 0) {
+        reportDiv.innerHTML = '<p class="error-message">No data available for date range specified</p>';
+    } else {
+        if (type === 'workout') {
+            reportDiv.innerHTML += generateWorkoutTable('Workout Data', filteredWorkoutData);
+        } else if (type === 'habits') {
+            reportDiv.innerHTML += generateHabitTable('Habit Data', filteredHabitData);
+        } else if (type === 'protein') {
+            reportDiv.innerHTML += generateProteinTable('Protein Data', filteredProteinData);
+        }
+    }
+
+    // Push export options to the bottom
+    document.querySelector('.export-buttons').style.marginTop = '20px';
+}
+
+function filterWorkoutDataByDateRange(data, startDate, endDate) {
+    return data.filter(item => {
+        const date = new Date(item.timestamp);
+        return date >= startDate && date <= endDate;
+    });
+}
+
+function filterHabitDataByDateRange(data, startDate, endDate) {
+    return data.filter(item => {
+        const date = new Date(item.timestamp);
+        return date >= startDate && date <= endDate;
+    });
+}
+
+function filterProteinDataByDateRange(data, startDate, endDate) {
+    const filteredData = {};
+    for (const [date, value] of Object.entries(data)) {
+        const currentDate = new Date(date);
+        if (currentDate >= startDate && currentDate <= endDate) {
+            filteredData[date] = value;
+        }
+    }
+    return filteredData;
+}
+
+function generateWorkoutTable(title, data) {
+    let table = `<h3>${title}</h3><table><tr><th>Date</th><th>Exercise</th><th>Sets</th><th>Reps</th><th>Weight</th></tr>`;
+    data.forEach(item => {
+        const date = new Date(item.timestamp).toLocaleDateString();
+        table += `<tr><td class="center-text">${date}</td><td class="center-text">${item.exercise}</td><td class="center-text">${item.setNumber}</td><td class="center-text">${item.setReps}</td><td class="center-text">${item.setWeight}</td></tr>`;
+    });
+    table += '</table>';
+    return table;
+}
+
+function generateHabitTable(title, data) {
+    let table = `<h3>${title}</h3><table><tr><th>Date</th><th>Sleep</th><th>Stress</th><th>Weight</th><th>Notes</th></tr>`;
+    data.forEach(item => {
+        const date = new Date(item.timestamp).toLocaleDateString();
+        table += `<tr><td class="center-text">${date}</td><td class="center-text">${item.sleep}</td><td class="center-text">${item.stress}</td><td class="center-text">${item.weight}</td><td class="center-text">${item.notes}</td></tr>`;
+    });
+    table += '</table>';
+    return table;
+}
+
+function generateProteinTable(title, data) {
+    let table = `<h3>${title}</h3><table><tr><th>Date</th><th>Goal</th><th>Intake</th></tr>`;
+    for (const [date, value] of Object.entries(data)) {
+        table += `<tr><td class="center-text">${date}</td><td class="center-text">${value.goal}</td><td class="center-text">${value.intake}</td></tr>`;
+    }
+    table += '</table>';
+    return table;
 }
