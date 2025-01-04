@@ -8,17 +8,25 @@
 </head>
 <body>
     <header>
-        <button id="home-btn">Home</button>
+        <div class="header-content">
+            <img src="../images/logo.png" alt="CP Iron Logo" id="logo">
+            <div class="title-container">
+                <h1>Email Report</h1>
+            </div>
+        </div>
     </header>
-    <main>
-        <h1>What would you like to email?</h1>
+    <div id="app">
+        <div class="form-buttons">
+            <button type="button" id="home-btn">Home</button>
+        </div>
+        <h2>What would you like to email?</h2>
         <p style="font-size: smaller;">Emailed reports will only contain the last 30 days of information.</p>
-        <div class="button-container">
+        <div class="form-buttons">
             <button id="email-workout-btn">Workout Data</button>
             <button id="email-habits-btn">Habit Data</button>
             <button id="email-protein-btn">Protein Data</button>
         </div>
-    </main>
+    </div>
     <script src="../scripts/data/email.js"></script>
 </body>
 </html>
